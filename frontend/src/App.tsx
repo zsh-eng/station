@@ -1,8 +1,8 @@
+import '@/App.css';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Greet } from '@wailsjs/go/main/App';
 import { useState } from 'react';
-import '@/App.css';
 
 function App() {
   const [resultText, setResultText] = useState(
