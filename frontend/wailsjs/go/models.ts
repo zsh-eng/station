@@ -18,6 +18,22 @@ export namespace request {
 	        this.headers = source["headers"];
 	    }
 	}
+	export class StationHttpResponse {
+	    statusCode: number;
+	    headers: {[key: string]: string[]};
+	    body: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new StationHttpResponse(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.statusCode = source["statusCode"];
+	        this.headers = source["headers"];
+	        this.body = source["body"];
+	    }
+	}
 
 }
 

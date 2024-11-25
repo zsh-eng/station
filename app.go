@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	"io"
+	"log"
+	"net/http"
 	"station/pkg/request"
 )
 
@@ -29,9 +31,47 @@ func (a *App) Greet(name string) string {
 }
 
 func (a *App) SendStationHttpRequest(
-	request request.StationHttpRequest,
-) {
+	req request.StationHttpRequest,
+) (*request.StationHttpResponse, error) {
+	// how to use enums
+	// how to do logging in go?
+
 	fmt.Println("Received request from the station frontend")
-	jsonBytes, _ := json.MarshalIndent(request, "", "  ")
-	fmt.Println(string(jsonBytes))
+	// input validation and returning the appropriate errors
+	// better input validation on the client side as well
+
+	// catching errors and returning them to the frontend
+	// support more methods
+	// support various input types
+	// show various output results  and better representation for the headers
+	// handle bearer auth
+	// handle web socket connections
+	// named collections
+	// history for the request / response (database)
+	// cmd k search
+	switch req.Method {
+	case "GET":
+		resp, err := http.Get(req.Url)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer resp.Body.Close()
+		statusCode := resp.StatusCode
+		headers := resp.Header
+		bodyBytes, err := io.ReadAll(resp.Body)
+		bodyString := string(bodyBytes)
+
+		return &request.StationHttpResponse{
+			StatusCode: statusCode,
+			Headers:    headers,
+			Body:       bodyString,
+		}, nil
+	case "POST":
+	default:
+		fmt.Println("Unrecognised method: %s", req.Method)
+	}
+
+	// how does wails handle errors
+	return nil, fmt.Errorf("Error")
 }

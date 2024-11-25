@@ -4,4 +4,4 @@ import {request} from '../models';
 
 export function Greet(arg1:string):Promise<string>;
 
-export function SendStationHttpRequest(arg1:request.StationHttpRequest):Promise<void>;
+export function SendStationHttpRequest(arg1:request.StationHttpRequest):Promise<request.StationHttpResponse>;
